@@ -1,0 +1,39 @@
+App.js
+
+const stripe = Stripe('YOUR_PUBLISHABLE_STRIPE_KEY');
+
+document.getElementById('booking-form').addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const form = e.target;
+  const payload = {
+    name: form.name.value,
+    address: form.address.value,
+    windows: parseInt(form.windows.value),
+    datetime: form.datetime.value,
+    email: form.email.value
+  };
+
+  document.getElementById('pay-button').disabled = true;
+  document.getElementById('message').textContent = 'Creating checkout...';
+
+  const res = await fetch('/create-checkout-session', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!res.ok) {
+    document.getElementById('message').textContent = 'Error creating checkout.';
+    document.getElementById('pay-button').disabled = false;
+    return;
+  }
+
+  const { sessionId } = await res.json();
+  const result = await stripe.redirectToCheckout({ sessionId });
+
+  if (result.error) {
+    document.getElementById('message').textContent = result.error.message;
+    document.getElementById('pay-button').disabled = false;
+  }
+});

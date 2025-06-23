@@ -1,0 +1,7 @@
+Succes.html
+
+<!DOCTYPE html>
+<html><body>
+  <h1>Payment Successful! ✅</h1>
+  <p>Thank you! Your appointment is confirmed.</p>
+</body></html>

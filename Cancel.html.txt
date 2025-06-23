@@ -1,0 +1,7 @@
+Cancel.html
+
+<!DOCTYPE html>
+<html><body>
+  <h1>Payment Canceled ❗</h1>
+  <p>No problem, feel free to try again!</p>
+</body></html>
